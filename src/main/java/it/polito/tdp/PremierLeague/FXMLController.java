@@ -48,10 +48,25 @@ public class FXMLController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	
+    	Match m = this.cmbMatch.getValue();
+    	if(m==null) {
+    		txtResult.setText("Inserisci valore da combobox");
+    		return;
+    	}else {
+    		txtResult.clear();
+    		txtResult.appendText(model.creaGrafo(m));
+    		
+    		this.btnGiocatoreMigliore.setDisable(false);
+            this.btnSimula.setDisable(false);
+    	}
+    	
     }
 
     @FXML
     void doGiocatoreMigliore(ActionEvent event) {    	
+    	
+    	txtResult.appendText(model.giocatoreMigliore());
+    	
     	
     }
     
@@ -68,10 +83,15 @@ public class FXMLController {
         assert cmbMatch != null : "fx:id=\"cmbMatch\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtN != null : "fx:id=\"txtN\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
+        
+        this.btnGiocatoreMigliore.setDisable(true);
+        this.btnSimula.setDisable(true);
 
     }
     
     public void setModel(Model model) {
     	this.model = model;
+    	
+    	this.cmbMatch.getItems().addAll(model.getMatches());
     }
 }
